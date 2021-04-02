@@ -37,3 +37,6 @@ data structure ------
 tiles [{Id      (Properties)         }]
         Current Pos
         Win Post
+
+
+
