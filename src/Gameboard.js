@@ -24,8 +24,8 @@ export default class Gameboard extends React.Component {
         this.checkZero = this.checkZero.bind(this)
         this.clearPic = this.clearPic.bind(this)
     }
-    // When the page is rendered on the screen, I initialize the size of the board, 
-    // create the index array used to tell the original location, and the currentLocation array used to map the divs. 
+    // When the page is rendered on the screen, It initialize the size of the board, 
+    // creates the index array used to tell the original location, and the currentLocation array used to map the divs. 
     // If there is a previous game already inplay, when the page reloads it rerenders on screen.
     componentDidMount() {
         let count = 0
@@ -78,7 +78,6 @@ export default class Gameboard extends React.Component {
     }
     // my function for completing the image
     result() {
-        // console.log('in the result function')
         let count = 0
         var subArr = []
         var indexArr = []
@@ -95,7 +94,8 @@ export default class Gameboard extends React.Component {
             originalLocation: indexArr
         })
     }
-    // a function used in my shuffle function, used to find the position of the 0 index.
+
+    // used in the Shuffle to find the position of the 0 index
     checkZero() {
         let x = [...this.state.currentLocation]
         let count = 0
@@ -109,8 +109,9 @@ export default class Gameboard extends React.Component {
             }
         }
     }
-    // function used to shuffle the picture, simulates a user click, by finding the index with zero, 
-    // finding all possible moves, randomaly choosing a move, and switching the two tiles, repeated 100 times. 
+
+    // used to shuffle the picture, simulates a user click, by finding the index with zero, 
+    // finding all possible moves, randomly choosing a move, and switching the two tiles, repeated 100 times. 
     start() {
         let count = 0
         while (count < 50) {
@@ -119,50 +120,44 @@ export default class Gameboard extends React.Component {
             let poss = this.locationCheck(zero)[2]
             let random = Math.floor(Math.random() * poss.length)
             let move = poss[random].toString()
-            // console.log(prevMove)
+
             if (move === 'below') {
                 let zeroCheck = this.locationCheck(zero)
                 let bottomMove = zeroCheck[0]
-                // console.log(bottomMove)
                 let row = bottomMove.row + 1
                 let col = bottomMove.col
                 let loc = { row, col }
                 this.swapTiles(loc, bottomMove)
             }
             if (move === 'right') {
-                // console.log('right')
                 let zeroCheck = this.locationCheck(zero)
                 let bottomMove = zeroCheck[0]
                 let row = bottomMove.row
                 let col = bottomMove.col + 1
                 let loc = { row, col }
                 this.swapTiles(loc, bottomMove)
-                // console.log(loc)
+
             }
             if (move === 'above') {
-                // console.log('above')
                 let zeroCheck = this.locationCheck(zero)
                 let bottomMove = zeroCheck[0]
                 let row = bottomMove.row - 1
                 let col = bottomMove.col
                 let loc = { row, col }
                 this.swapTiles(loc, bottomMove)
-                // console.log(loc)
+
             }
             if (move === 'left') {
-                // console.log('left')
                 let zeroCheck = this.locationCheck(zero)
                 let bottomMove = zeroCheck[0]
                 let row = bottomMove.row
                 let col = bottomMove.col - 1
                 let loc = { row, col }
                 this.swapTiles(loc, bottomMove)
-                // console.log(loc)
             }
             count++
         }
     }
-    // count = 0
 
     // checks the location of the specific tile, looks at all its possible moves, and switched tiles if allowed.
     locationCheck(location) {
@@ -171,10 +166,8 @@ export default class Gameboard extends React.Component {
         let posibilities = 0
         let zeroLoc = location
         let moves = []
-        // console.log({ col, row })
-        // if (index !== 0) {
+
         if (y < this.props.rows - 1) {
-            // console.log('checking below')
             posibilities++
             moves.push('below')
             if (this.state.currentLocation[y + 1][x] === 0) {
@@ -185,7 +178,6 @@ export default class Gameboard extends React.Component {
             }
         }
         if (y > 0) {
-            // console.log('checking above')
             posibilities++
             moves.push('above')
             if (this.state.currentLocation[y - 1][x] === 0) {
@@ -196,7 +188,6 @@ export default class Gameboard extends React.Component {
             }
         }
         if (x > 0) {
-            // console.log('checking to the left')
             posibilities++
             moves.push('left')
             if (this.state.currentLocation[y][x - 1] === 0) {
@@ -207,7 +198,6 @@ export default class Gameboard extends React.Component {
             }
         }
         if (x < this.props.columns - 1) {
-            // console.log('checking to the right')
             moves.push('right')
             posibilities++
             if (this.state.currentLocation[y][x + 1] === 0) {
@@ -217,7 +207,7 @@ export default class Gameboard extends React.Component {
                 zeroLoc = answer
             }
         }
-        // console.log(posibilities)
+
         return (
             [
                 zeroLoc,
@@ -231,7 +221,6 @@ export default class Gameboard extends React.Component {
         let one = [...this.state.currentLocation]
         let two = [...this.state.originalLocation]
         let check = false
-        // console.log({one,two})
         if (one.toString() === two.toString()) {
             check = true
         }
@@ -249,21 +238,19 @@ export default class Gameboard extends React.Component {
     }
     swapTiles(loc, zero) {
         let zeroLoc = zero
-        // console.log(zeroLoc)
         let current = [...this.state.currentLocation]
         let temp = current[loc.row][loc.col]
         current[loc.row][loc.col] = current[zeroLoc.row][zeroLoc.col]
         current[zeroLoc.row][zeroLoc.col] = temp
-        // console.log(current)
         this.setState({ currentLocation: current })
     }
     // click function put on every button
     handleClick(index, location) {
-        // console.log({ index, location })
+        
         let zeroLocation = this.locationCheck(location)[0]
-        // console.log(zeroLocation)
+       
         if (zeroLocation === { row: 0, col: 0 }) {
-            // console.log(zeroLocation)
+            
             this.swapTiles(location, zeroLocation)
         } else {
             this.swapTiles(location, zeroLocation)
@@ -275,8 +262,6 @@ export default class Gameboard extends React.Component {
 
         let x = event.target.files[0]
         // let url = URL.createObjectURL(event.target.files[0])
-        // console.log({x,url})
-        
 
         this.setState({ picture : URL.createObjectURL(x)})
     }
@@ -291,7 +276,7 @@ export default class Gameboard extends React.Component {
 
     render() {
         const alert = this.state.win ? <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>WOW!</strong> You figured it out!
+        <strong>WOW!</strong> Congrats!
         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
       </div> : null
 
@@ -315,9 +300,9 @@ export default class Gameboard extends React.Component {
                             ))}
                     </div>
                 </div>
-                <div className='offset-2 col-8 pt-3 pb-5 d-flex justify-content-around'>
+                <div className='offset-2 col-8 pt-3 pb-8 d-flex justify-content-around'>
                 <button onClick={this.start} class="btn btn-outline-primary">Start!</button>
-                <button onClick={this.result} class="btn btn-outline-primary">Solve Puzzle!</button>
+                <button onClick={this.result} class="btn btn-outline-primary">Solve!</button>
                 </div>
             </>
         )
