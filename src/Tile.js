@@ -22,16 +22,9 @@ export default class Tile extends React.Component {
             marginLeft: imgX
         }
         return (
-            <div
-                id={`${'tile' + this.props.index}`}
-                className='border col-3 tile'
-                
-                onClick={() => this.props.onClick(this.props.index, actualLoc)}
-            >
-                <img style={myStyle} className='img' src={`${this.props.picture === null ? process.env.PUBLIC_URL + './logo.svg' : this.props.picture}`}
-                ></img>
-                {this.props.index}
-            </div>
+            <div id={`${'tile' + this.props.index}`} className='border col-3 tile' onClick={() => this.props.onClick(this.props.index, actualLoc)}>
+                <img style={myStyle} className='img' src={`${this.props.picture === null ? process.env.PUBLIC_URL + './mando.jpg' : this.props.picture}`}></img>
+                {this.props.index} </div>
         )
     }
 }

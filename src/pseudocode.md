@@ -5,6 +5,7 @@ Puzzle Slider
     - certain amount of allowed moves, depending on the tile, Middle pieces can move 4 ways, outside pieces, can move up to 3, and corner can move 2.
     - data structure []
     - Randomize button (Simulates clicks, and makes true moves thats not considered impossible moves)
+    - use state to store the current position of the puzzle, to be able to determine the win.
         Row 0       1       2       3
         ------------------------------------
 Col 0   |        |        |       |        |    
